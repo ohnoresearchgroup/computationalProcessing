@@ -10,7 +10,7 @@ import re
 filename_gso = "C:\\Users\\peo0005\\OneDrive - Auburn University\\Documents\\GitHub\\computationalProcessing\\examplefiles\\gsopfreq-wat.gjf.log"
 filename_ve = "C:\\Users\\peo0005\\OneDrive - Auburn University\\Documents\\GitHub\\computationalProcessing\\examplefiles\\water.gjf.log"
 
-def calculateAbsorption(filename_gso,filename_ve):
+def CalculateAbsorption(filename_gso,filename_ve):
     # Open the file in read mode
     with open(filename_gso, 'r') as file_gso:
         # Read all lines from the file
