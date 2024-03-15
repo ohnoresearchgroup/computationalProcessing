@@ -38,7 +38,8 @@ def PlotAbsorption(filename):
         parts = state.split(' ')
         parts = [part.strip() for part in parts if part.strip()]
         new_row = {'Excited State': int(parts[2][:-1]), 'Quantum State': parts[3], 'Energy': float(parts[4]), 'Wavelength': float(parts[6]), 'Oscillator Strength': float(parts[8][2:]), '<S**2>': float(parts[9][7:])}
-        df_es = df_es.append(new_row, ignore_index=True)
+        new_row_df = pd.DataFrame([new_row])
+        df_es = pd.concat([df_es, new_row_df], ignore_index=True)
     print(df_es)
         
     #print(df_es)
