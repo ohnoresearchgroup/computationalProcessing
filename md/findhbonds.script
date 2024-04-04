@@ -1,0 +1,4 @@
+parm nr_solv1.parm7
+trajin prod1.dcd
+hbond acceptormask @1 solventdonor :WAT series uvseries uvhbonds.dat
+run

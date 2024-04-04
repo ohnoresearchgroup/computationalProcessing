@@ -1,0 +1,5 @@
+parm nr_solv1.parm7
+trajin prod1.dcd
+autoimage
+trajout prod1imaged.dcd
+go
