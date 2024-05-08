@@ -32,7 +32,8 @@ for i in frames:
         file.write("parm " + paramfile + "\n")
         file.write("trajin " + frametrajfile + "\n")
         file.write("watershell " + solutemask + " out watershell.dat" 
-                   + " lower " + str(limit) +"\n")
+                   + " lower " + str(limit)
+                   + " upper " + str(limit) +"\n")
         file.write("go")    
     
     #run cpptraj file to determine how many molecules within cutoff
