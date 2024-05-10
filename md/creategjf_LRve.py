@@ -1,11 +1,14 @@
 import subprocess 
 import pandas as pd
 import os
+import shutil
 
-### ENTER basename and frame numbers for existing xyz files
+### ENTER basename and frame numbers for existing xyz files, and output root directory
 basename = "prodimaged_0m"
 frames = [100,1000]
+outputpath = "C:\\Users\\peo0005\\OneDrive - Auburn University\\Desktop"
 
+filelist = []
 #iterate through each file
 for i in frames:
     #assemble input and output file names
@@ -39,6 +42,7 @@ for i in frames:
         
     #create output gjf
     outputfilename = filename +'.LRve.gjf'
+    filelist.append(outputfilename)
     #create header
     with open(outputfilename,'w') as file:
         file.write('%NProcShared=30\n')
@@ -56,3 +60,15 @@ for i in frames:
     with open(outputfilename, 'a') as file:
         file.write('\n')
         file.write('\n')
+        
+for file in filelist:  
+    dirname = '.'.join(file.split(".")[:-2])
+    dirname = os.path.join(outputpath,"LRve",dirname)
+    
+    #check if directory exists, if not, create it
+    if not os.path.exists(dirname):
+        os.makedirs(dirname)
+
+    #move that file into directory
+    shutil.move(file, os.path.join(dirname, file))
+    
