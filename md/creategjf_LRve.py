@@ -6,7 +6,6 @@ import shutil
 ### ENTER basename and frame numbers for existing xyz files, and output root directory
 basename = "prodimaged_0m"
 frames = [100,1000]
-outputpath = "C:\\Users\\peo0005\\OneDrive - Auburn University\\Desktop"
 
 filelist = []
 #iterate through each file
@@ -63,7 +62,7 @@ for i in frames:
         
 for file in filelist:  
     dirname = '.'.join(file.split(".")[:-2])
-    dirname = os.path.join(outputpath,"LRve",dirname)
+    dirname = os.path.join("LRve",dirname)
     
     #check if directory exists, if not, create it
     if not os.path.exists(dirname):
