@@ -87,8 +87,7 @@ for i in frames:
     with open('closest.cpptraj', 'w') as file:
         file.write("parm " + paramfile + "\n")
         file.write("trajin " + frametrajfile + "\n")
-        file.write("closest " + str(firstshell) + " " + newmask + " first "
-                   "outprefix closest\n")
+        file.write("closest " + str(firstshell) + " " + newmask + " first\n")
         file.write("strip :Na+,Cl-&!@" + ions+ "\n")
         file.write("trajout " + frametrajfile + ".pdb pdb nobox\n")
         file.write("trajout " + frametrajfile + ".xyz xyz nobox\n")

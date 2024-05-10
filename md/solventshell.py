@@ -49,6 +49,7 @@ for i in frames:
     with open('closest.cpptraj', 'w') as file:
         file.write("parm " + paramfile + "\n")
         file.write("trajin " + frametrajfile + "\n")
+        file.write("closest " + str(firstshell) + " " + solutemask + " first\n")
         file.write("trajout " + trajfile[:-4] + "."
                    + frametrajfile + ".pdb pdb nobox\n")
         file.write("trajout " + trajfile[:-4] + "."
