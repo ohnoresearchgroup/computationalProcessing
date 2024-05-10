@@ -49,10 +49,10 @@ for i in frames:
     with open('closest.cpptraj', 'w') as file:
         file.write("parm " + paramfile + "\n")
         file.write("trajin " + frametrajfile + "\n")
-        file.write("closest " + str(firstshell) + " " + solutemask + " first "
-                   "outprefix closest\n")
-        file.write("trajout " + frametrajfile + ".pdb pdb nobox\n")
-        file.write("trajout " + frametrajfile + ".xyz xyz nobox\n")
+        file.write("trajout " + trajfile[:-4] + "."
+                   + frametrajfile + ".pdb pdb nobox\n")
+        file.write("trajout " + trajfile[:-4] + "."
+                   + frametrajfile + ".xyz xyz nobox\n")
         file.write("go")
 
     subprocess.run(["cpptraj","closest.cpptraj"])
