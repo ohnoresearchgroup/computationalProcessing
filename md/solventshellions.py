@@ -5,7 +5,7 @@ paramfile = "isolv.parm7"
 trajfile = "prodimagedi.dcd"
 solutemask = "@1-42"
 
-limit = 5 #in angstroms
+limit = 4 #in angstroms
 
 #select frames
 frames = [100,1000]
@@ -88,9 +88,11 @@ for i in frames:
         file.write("parm " + paramfile + "\n")
         file.write("trajin " + frametrajfile + "\n")
         file.write("closest " + str(firstshell) + " " + newmask + " first\n")
-        file.write("strip :Na+,Cl-&!@" + ions+ "\n")
-        file.write("trajout " + frametrajfile + ".pdb pdb nobox\n")
-        file.write("trajout " + frametrajfile + ".xyz xyz nobox\n")
+        file.write("strip :Na+,Cl-&!@" + ions + "\n")
+        file.write("trajout " + trajfile[:-4] + "."
+                   + frametrajfile + ".pdb pdb nobox\n")
+        file.write("trajout " + trajfile[:-4] + "."
+                   + frametrajfile + ".xyz xyz nobox\n")
         file.write("go")
 
     subprocess.run(["cpptraj","closest.cpptraj"])

@@ -4,7 +4,7 @@ import os
 import shutil
 
 ### ENTER basename and frame numbers for existing xyz files, and output root directory
-basename = "prodimaged_0m"
+basename = "prodimagedi"
 frames = [100,1000]
 
 filelist = []

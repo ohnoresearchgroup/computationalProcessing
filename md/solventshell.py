@@ -6,7 +6,6 @@ trajfile = "prodimaged_0m.dcd"
 solutemask = "@1-42"
 
 
-filename_watershell = "watershell.dat"
 limit = 4 #in angstroms
 
 #select frames
