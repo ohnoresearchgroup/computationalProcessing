@@ -52,6 +52,11 @@ def PlotAbsorption(filename):
     for index, row in df_es_nonzero.iterrows():
         wl0 = row['Wavelength']
         f = row['Oscillator Strength']
-        ext = ext + 1.3062974e8*f/(1e7/3099.6)*np.exp(-((1/wl -1/wl0)/(1/3099.6))**2)
-        plt.plot(wl,ext)
-        plt.xlabel('Wavelength [nm]')
+        thisosc = 1.3062974e8*f/(1e7/3099.6)*np.exp(-((1/wl -1/wl0)/(1/3099.6))**2)
+        plt.figure()
+        plt.plot(wl,thisosc)
+        ext = ext + thisosc
+    
+    plt.figure()
+    plt.plot(wl,ext)
+    plt.xlabel('Wavelength [nm]')
