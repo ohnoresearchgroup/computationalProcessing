@@ -60,3 +60,5 @@ def PlotAbsorption(filename):
     plt.figure()
     plt.plot(wl,ext)
     plt.xlabel('Wavelength [nm]')
+    
+    return [wl,ext]
