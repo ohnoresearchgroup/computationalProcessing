@@ -4,33 +4,26 @@ import matplotlib.pyplot as plt
 
 def PlotAbsorption(filename):
 
-    # find the beginning and end of the Excitation energies and oscillators strengths section
-    with open(filename, 'r') as file:
-        # Flag to indicate whether the desired line has been found
-        found_desired_line = False
-        
-        # Read each line in the file and keep track of the line number
-        for line_number, line in enumerate(file, start=1):
-            # Check if the line contains the specified text
-            if "Excitation energies and oscillator strengths:" in line:
-                found_desired_line = True
-                startline = line_number
-            elif found_desired_line and line.startswith(" ****"):
-                # Print the line number of the next line starting with ****
-                endline = line_number
-                break  # Exit the loop as the desired line has been found
 
-    excitedStates = []
     # Open the file in read mode
+    targetstring = " Excitation energies and oscillator strengths:"
+    linenumberlastexcitation = 0;
     with open(filename, 'r') as file:
-        # Read each line in the file and keep track of the line number
-        for line_number, line in enumerate(file, start=1):
-            # Check if the current line number is within the specified range
-            if startline <= line_number <= endline:
-                # Check if the line starts with "Excited State"
-                if line.startswith(" Excited State"):
-                    # Print or process the line as needed
-                    excitedStates.append(line.strip())
+        for linenumber, line in enumerate(file,1):
+            if line.startswith(targetstring):
+                linenumberlastexcitation = linenumber
+                    
+    #find each excited state    
+    targetstring = " Excited State"
+    excitedStates = []
+    with open(filename, 'r') as file:
+        for linenumber, line in enumerate(file,1):
+            if linenumber < linenumberlastexcitation:
+                continue
+            if line.startswith(targetstring):                
+                excitedStates.append(line.strip())
+
+    
 
     column_names = ['Excited State', 'Quantum State',  'Energy', 'Wavelength', 'Oscillator Strength',  '<S**2>']
     df_es = pd.DataFrame(columns = column_names)
