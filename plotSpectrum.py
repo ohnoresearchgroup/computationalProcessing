@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-def PlotAbsorption(filename):
+def PlotSpectrum(filename):
 
 
     # Open the file in read mode
