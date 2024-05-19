@@ -1,11 +1,8 @@
 import subprocess
 import os
 
-#paramfile = "isolv.parm7"
-#trajfile = "prodimagedi.dcd"
-
-paramfile = "solv.parm7"
-trajfile = "prodimaged_0m.dcd"
+paramfile = "isolv.parm7"
+trajfile = "prodimagedi.dcd"
 solutemask = "@1-42"
 
 #in anstroms
