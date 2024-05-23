@@ -28,7 +28,7 @@ for i in frames:
         lines_until_zero = index_zero
     
     #read in the coordinates
-    df = pd.read_csv(filegjf, sep='\s+',skiprows = index_zero+1,names = ['atoms','x','y','z'])
+    df = pd.read_csv(filegjf, sep='\\s+',skiprows = index_zero+1,names = ['atoms','x','y','z'])
     
     #calculate the charge from the positive and negative ions
     count_na = (df['atoms'] == 'Na').sum()

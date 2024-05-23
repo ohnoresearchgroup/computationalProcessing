@@ -153,7 +153,7 @@ for i in frames:
         lines_until_zero = index_zero
     
     #read in the coordinates
-    df = pd.read_csv(expfilegjf, sep='\s+',skiprows = index_zero+1,names = ['atoms','x','y','z'])
+    df = pd.read_csv(expfilegjf, sep='\\s+',skiprows = index_zero+1,names = ['atoms','x','y','z'])
     
     #calculate the charge
     count_na = (df['atoms'] == 'Na').sum()
@@ -188,7 +188,7 @@ for i in frames:
 
         
     #read in the coordinates of the charges
-    df = pd.read_csv(onfilegjf, sep='\s+',names = ['atoms','x','y','z'])
+    df = pd.read_csv(onfilegjf, sep='\\s+',names = ['atoms','x','y','z'])
     
     #delete the point charge gjf
     if os.path.exists(onfilegjf):
