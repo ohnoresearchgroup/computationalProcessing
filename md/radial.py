@@ -3,14 +3,13 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
-#paramfile = "isolv.parm7"
-#trajfile = "prodimagedi.dcd"
-
-paramfile = "solv.parm7"
-trajfile = "prodimaged_0m.dcd"
-
+#names of files
+paramfile = "isolv.parm7"
+trajfile = "prodimagedi.dcd"
+#True or False depending on ions or no ions
 ions = False
+
+
 
 names = ["wholesolute","ocarbonyl","nring","oring","ndiethyl"]
 masks = ["@1-42","@1","@10","@15","@22"]
