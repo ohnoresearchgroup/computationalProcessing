@@ -5,21 +5,21 @@ import shutil
 
 
 #name for outputfiles (will automatically append frame number and file extension)
-outputname = 'prodimagedi.exp4a.pc8a.LRve'
+outputname = 've'
 
-paramfile = "isolv.parm7"
-trajfile = "prodimagedi.dcd"
+paramfile = "solv.parm7"
+trajfile = "prodimaged_0m.dcd"
 solutemask = "@1-42"
 
 #in angstroms
 limit_iontosolute = 4 #threshold distance from solute to keep ions
 limit_solventtoion = 4 #threshold distance to an ion to keep waters
-limit_solventtosolute = 4 #threshold distance to the solute to keep waters
+limit_solventtosolute = 3 #threshold distance to the solute to keep waters
 
-limit_pointcharges = 8 #threshold distance from solute to keep ions
+limit_pointcharges = 6 #threshold distance from solute to low layer
 
 #select frames
-frames = [100,1000]
+frames = [3750,3800,3850,3900,3950,4050,4100,4150,4200,4300,4350,4400,4450,4550,4600,4650,4700,4800,4850,4950]
 
 def determineCharge(atom):
     if atom == 'H':
@@ -168,12 +168,12 @@ for i in frames:
     outputfilename = outputname + "." + str(i) + ".gjf"
     filelist.append(outputfilename)
     
-    #create header
+   #create header
     with open(outputfilename,'w') as file:
         file.write('%NProcShared=16\n')
         file.write('%Mem=64GB\n')
         file.write('%chk=' + outputfilename[:-4] + '.chk\n')
-        file.write('#p td(50-50,nstates=6) cam-b3lyp/aug-cc-pvdz int=(ultrafine,acc2e=12)\n')
+        file.write('#p oniom(td=(singlets,nstates=6)/cam-b3lyp/aug-cc-pvdz:amber=qeq)=embedcharge scrf=(smd,solvent=water,oniompcm=x) geom=connectivity int=(ultrafine,acc2e=12)\n')
         file.write('\n')
         file.write('vertical excitation with LR\n')
         file.write('\n')
