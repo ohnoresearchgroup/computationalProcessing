@@ -126,7 +126,7 @@ for i in frames:
     #convert the file
     subprocess.run(["ase","convert","-i","xyz","-o","gaussian-in",expfilexyz,expfilegjf])
     
-    #assemble input and output file names for pc file
+    #assemble input and output file names for oniom file
     onfilename = "oniomframe." + str(i)
     onfilexyz = onfilename + ".xyz"
     onfilegjf = onfilename + ".gjf"    
@@ -134,7 +134,7 @@ for i in frames:
     subprocess.run(["ase","convert","-i","xyz","-o","gaussian-in",onfilexyz,onfilegjf])
 
     
-    #remove all lines in the pointcharge file that match one in the explict file
+    #remove all lines in the oniom file that match one in the explicit file
     with open(expfilegjf,'r') as expfile:
         explines = set(expfile.readlines())
     with open(onfilegjf,'r') as onfile:
@@ -152,17 +152,36 @@ for i in frames:
     if index_zero is not None:
         lines_until_zero = index_zero
     
-    #read in the coordinates
-    df = pd.read_csv(expfilegjf, sep='\\s+',skiprows = index_zero+1,names = ['atoms','x','y','z'])
+    #read in the coordinates of the hi layer
+    dfHi = pd.read_csv(expfilegjf, sep='\\s+',skiprows = index_zero+1,names = ['atoms','x','y','z'])
     
-    #calculate the charge
-    count_na = (df['atoms'] == 'Na').sum()
-    count_cl = (df['atoms'] == 'Cl').sum()
-    charge = count_na-count_cl
+    #add H layer to ONIOM
+    dfHi['layer'] ='H'
+    
+    #calculate the charge of the hi layer
+    count_na = (dfHi['atoms'] == 'Na').sum()
+    count_cl = (dfHi['atoms'] == 'Cl').sum()
+    chargeHi = count_na-count_cl
     
     #delete the explicit gjf
     if os.path.exists(expfilegjf):
         os.remove(expfilegjf)
+        
+    #read in the coordinates of the low layer
+    dfLow = pd.read_csv(onfilegjf, sep='\\s+',names = ['atoms','x','y','z'])
+    
+    #add low layer label
+    dfLow['layer'] = 'L'  
+    
+    #calculate the charge of the low layer
+    count_na = (dfLow['atoms'] == 'Na').sum()
+    count_cl = (dfLow['atoms'] == 'Cl').sum()
+    chargeLow = count_na-count_cl
+    
+    #delete the oniom gjf
+    if os.path.exists(onfilegjf):
+        os.remove(onfilegjf)
+    
         
     #create output gjf
     outputfilename = outputname + "." + str(i) + ".gjf"
@@ -177,28 +196,14 @@ for i in frames:
         file.write('\n')
         file.write('vertical excitation with LR\n')
         file.write('\n')
-        file.write(str(charge) + " " + "1\n")
-        
-    #add H layer to ONIOM
-    df['layer'] ='H'
+        file.write(str(chargeLow) + " 1 " + str(chargeHi) + " 1 " +  str(chargeHi) + " 1\n")
     
     #append coordinates
-    df.to_csv(outputfilename, sep= ' ',index=False,mode='a',
+    dfHi.to_csv(outputfilename, sep= ' ',index=False,mode='a',
               header=False,float_format='%.8f')
-
-        
-    #read in the coordinates of the charges
-    df = pd.read_csv(onfilegjf, sep='\\s+',names = ['atoms','x','y','z'])
-    
-    #delete the point charge gjf
-    if os.path.exists(onfilegjf):
-        os.remove(onfilegjf)
-    
-    #add low layer label
-    df['layer'] = 'L'
     
     #append coordinates of lower layer to file
-    df.to_csv(outputfilename, sep= ' ',index=False,mode='a',
+    dfLow.to_csv(outputfilename, sep= ' ',index=False,mode='a',
               header=False,float_format='%.8f')
     
     #append empty lines
