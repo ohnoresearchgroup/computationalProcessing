@@ -11,7 +11,6 @@ trajfile = "prod_gs_1m1.dcd"
 #frames you are selecting (this is from 25 to 1200, every 25)
 selectedframes = np.arange(25,1225,25)
 
-names = ["wholesolute","ocarbonyl","nring","oring","ndiethyl"]
 masks = ["@1-42","@1","@10","@15","@22"]
 
 for mask in masks:
