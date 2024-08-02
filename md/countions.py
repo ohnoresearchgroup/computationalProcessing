@@ -15,7 +15,7 @@ thresholdInner = 4 #threshold distance for first layer
 thresholdOuter = 8 #threshold distance to outside of second layer
 
 #select frames
-frames = np.arange(25,1225,25)
+frames = np.arange(100,1000,100)
 
 
 #nothing to edit below here
@@ -52,8 +52,7 @@ for i in frames:
         file.write("parm " + paramfile + "\n")
         file.write("reference " + frametrajfile + "\n")
         file.write("trajin " + frametrajfile + "\n")
-        file.write("strip :WAT\n")
-        file.write("strip !(@1-42<^"+ strthresholdOuter + ")&:Na+,Cl-\n")
+        file.write("strip !(@1-42<^"+ strthresholdOuter + ")&:WAT,Na+,Cl-\n")
         file.write("strip @1-42\n")
         file.write("trajout strippedOuter." + str(i) + ".xyz xyz nobox\n")
         file.write("go")   
@@ -68,8 +67,7 @@ for i in frames:
         file.write("parm " + paramfile + "\n")
         file.write("reference " + frametrajfile + "\n")
         file.write("trajin " + frametrajfile + "\n")
-        file.write("strip :WAT\n")
-        file.write("strip !(@1-42<^"+ strthresholdInner + ")&:Na+,Cl-\n")
+        file.write("strip !(@1-42<^"+ strthresholdInner + ")&:WAT,Na+,Cl-\n")
         file.write("strip @1-42\n")
         file.write("trajout strippedInner." + str(i) + ".xyz xyz nobox\n")
         file.write("go")   
@@ -83,7 +81,9 @@ for i in frames:
         os.remove(frametrajfile)
     
 
-dfIonCounts = pd.DataFrame(columns=["Frame","Inner Na+", "Inner Cl-","Inner Total","Outer Na+", "Outer Cl-","Outer Total"])
+dfIonCounts = pd.DataFrame(columns=["Frame",
+                                    "Inner Na+", "Inner Cl-","Inner Total Ions","Inner Water",
+                                    "Outer Na+", "Outer Cl-","Outer Total Ions","Outer Water"])
 
 
 for i in frames:    
@@ -108,6 +108,7 @@ for i in frames:
     dfInner = pd.read_csv(innerfilename, sep='\\s+', names = ['atoms','x','y','z'],na_values=[], keep_default_na=False)   
     innerNa = (dfInner['atoms'] == 'NA').sum()
     innerCl = (dfInner['atoms'] == 'CL').sum() 
+    innerWater = (dfInner['atoms'] == 'O').sum() 
     innerTotal = innerNa + innerCl
     #delete the inner file
     if os.path.exists(innerfilename):
@@ -117,15 +118,16 @@ for i in frames:
     dfOuter = pd.read_csv(outerfilename, sep='\\s+', names = ['atoms','x','y','z'],na_values=[], keep_default_na=False)       
     #calculate the charge of the low layer
     outerNa  = (dfOuter['atoms'] == 'NA').sum()
-    outerCl = (dfOuter['atoms'] == 'Cl').sum() 
+    outerCl = (dfOuter['atoms'] == 'CL').sum() 
+    outerWater = (dfOuter['atoms'] == 'O').sum()
     outerTotal = outerNa + outerCl
     #delete the outer file
     if os.path.exists(outerfilename):
         os.remove(outerfilename)
         
     new_line = {'Frame': i,
-                "Inner Na+": innerNa, "Inner Cl-": innerCl, "Inner Total": innerTotal, 
-                "Outer Na+": outerNa, "Outer Cl-": outerCl, "Outer Total": outerTotal}
+                "Inner Na+": innerNa, "Inner Cl-": innerCl, "Inner Total Ions": innerTotal, "Inner Water": innerWater, 
+                "Outer Na+": outerNa, "Outer Cl-": outerCl, "Outer Total Ions": outerTotal, "Outer Water": outerWater}
     
     dfIonCounts.loc[len(dfIonCounts)] = new_line
 
