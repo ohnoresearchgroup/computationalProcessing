@@ -6,6 +6,8 @@ import shutil
 ### ENTER basename and frame numbers for existing xyz files, and output root directory
 basename = "prodimagedi"
 frames = [100,1000]
+header = '#p td(50-50,nstates=6) cam-b3lyp/aug-cc-pvdz scrf=(smd,solvent=water) int=(ultrafine,acc2e=12)'
+
 
 filelist = []
 #iterate through each file
@@ -47,7 +49,7 @@ for i in frames:
         file.write('%NProcShared=30\n')
         file.write('%Mem=50GB\n')
         file.write('%chk=' + outputfilename[:-4] + '.chk\n')
-        file.write('#p td(50-50,nstates=6) cam-b3lyp/aug-cc-pvdz scrf=(smd,solvent=water) int=(ultrafine,acc2e=12)\n')
+        file.write(header + '\n')
         file.write('\n')
         file.write('vertical excitation with LR\n')
         file.write('\n')

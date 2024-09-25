@@ -8,7 +8,9 @@ solutemask = "@1-42"
 
 #select frames
 frames = [100,1000]
-basename = "prodimagei"
+
+#name here that goes to creategjf_lrve
+basename = "prodimagedi"
 
 #create cpptraj file to select certain frames and output as pdb
 with open('createframes.cpptraj','w') as file:
