@@ -5,6 +5,8 @@ paramfile = "isolv.parm7"
 trajfile = "prodimagedi.dcd"
 solutemask = "@1-42"
 
+
+
 #in anstroms
 limit_iontosolute = 4 #threshold distance from solute to keep ions
 limit_solventtoion = 4 #threshold distance to an ion to keep waters
