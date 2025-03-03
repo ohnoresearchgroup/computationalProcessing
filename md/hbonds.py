@@ -4,8 +4,8 @@ import pandas as pd
 import numpy as np
 
 #names of files
-paramfile = "solv1.parm7"
-trajfile = "prod_gs_1m1.dcd"
+paramfile = "isolv.parm7"
+trajfile = "prodimagedi.dcd"
 
 
 #frames you are selecting (this is from 25 to 1200, every 25)
