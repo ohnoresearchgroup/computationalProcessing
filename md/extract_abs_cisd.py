@@ -7,6 +7,14 @@ Spyder Editor
 
 import re
 import os
+import csv
+
+#only edit here
+#name of directory that has each subdirectory corresponding to a different frame
+parentdir = "cisd"
+
+
+
 
 #function to go through the file and find the correct energy
 def readFile(filename,frame_num):
@@ -41,7 +49,6 @@ def readFile(filename,frame_num):
                     return wl
 
 #create list of subdirectories in directory
-parentdir = "cisd"
 directories = [os.path.join(parentdir, d) for d in os.listdir(parentdir) if os.path.isdir(os.path.join(parentdir, d))]
 
 energies = {}
@@ -53,7 +60,6 @@ for d in directories:
         print("No frame number in folder.")
         break
     
-    
     filenames = os.listdir(d)
     for filename in filenames:
         if filename[-4:] == ".log":
@@ -62,5 +68,10 @@ for d in directories:
             
             
 print(energies)
+with open('output_cisd_wls.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Frame', 'Wl'])  # Header row (optional)
+    for key, value in energies.items():
+        writer.writerow([key, value])
 
 
